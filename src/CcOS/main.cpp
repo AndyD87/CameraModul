@@ -12,8 +12,8 @@
 
 #include "CcBase.h"
 #include "CcKernel.h"
-#include "CcFtp/CcFtpServer.h"
-#include "CcNetwork/CcHttpServer.h"
+#include "CcFtpServer.h"
+#include "CcHttpServer.h"
 #include "stdio.h"
 
 

@@ -57,7 +57,7 @@ target_link_libraries ( CcCLIApp LINK_PUBLIC
                               CcKernel
                               CcCore
                               CcTarget
-                              CcNetwork
+                              CcHttp
                               CcFtp )
 
 
