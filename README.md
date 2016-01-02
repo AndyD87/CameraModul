@@ -2,6 +2,20 @@
 
 Target of this fork is to add CcOS for a Remote Control Interface to the device
 
+First Goals:
+- Get Access to GPIOs through Sockets
+- Implement Access Interface to Devices connected via SPI and I2C
+- Capture periodicaly additional Data like temperature.
+- Add additional Hardware-Buttons for Start, Stop, etc
+
+Current State:
+- CcOS is integrated into build script and output set to Extras. 
+- Internal Web- and FTP-Server are running
+
+Next Step:
+- Add Device Access to CcOS.
+- Implement a Webpage-Reciever-Class for Settings and Status of Camera.
+
 # Original Part of Environment:
 
 ## The Latest Build
