@@ -1,11 +1,26 @@
 /**
+ * @copyright  Andreas Dirmeier (C) 2015
+ *
+ * This file is part of CcOS.
+ *
+ * CcOS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CcOS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CcOS.  If not, see <http://www.gnu.org/licenses/>.
+ **/
+/**
  * @author     Andreas Dirmeier
- * @copyright  Andreas Dirmeier (c) 2015
  * @version    0.01
  * @date       2015-10
  * @par        Language   C++ ANSI V3
- */
-/**
  * @file     CcFileSystem.cpp
  * @brief    Implementation of Class CcFileSystem
  */
@@ -55,7 +70,7 @@ CcFile *CcFileSystem::getFile(CcString &path){
 
 bool CcFileSystem::mkdir(CcString Path){
   bool bRet = false;
-  if ((Path.at(0) == '/') || Path.at(1) == ':'){
+  if ((Path.at(0) == '/') || Path.length() >1 || Path.at(1) == ':'){
     bRet = m_FSList.at(0).FS->mkdir(Path);
   }
   else{
