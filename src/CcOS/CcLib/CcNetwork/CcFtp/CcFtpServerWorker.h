@@ -43,7 +43,6 @@ public:
 
   void parseCommand(CcString &CommandBuf);
   bool acceptDataConnection(void);
-  CcString produceAbsolutPath(CcString &input);
 
   bool done;
 private:

@@ -241,7 +241,20 @@ public: //methods
   CcString operator+(const char *toAdd);
   CcString operator=(const char *toAdd){ clear();  return append(toAdd);}
   CcString operator=(char *toAdd){ clear(); return append(toAdd);}
-  CcString &operator=(CcString rhs);
+  CcString &operator=(const char assign)
+  {
+    clear();
+    append(assign);
+    return(*this);
+  }
+
+  CcString &operator=(CcString assign)
+  {
+    clear();
+    append(assign);
+    return(*this);
+  }
+
   bool operator!=(CcString toCompare){ return !compare(toCompare); }
   bool operator==(CcString toCompare){ return compare(toCompare); }
   bool operator<(CcString toCompare);

@@ -39,7 +39,7 @@ void CcShell::run(void) {
   while (getThreadState() == CCTHREAD_RUNNING){
     while (SIZE_MAX != (readSize = m_Input->read(inBuf, 256))){
       inData.append(inBuf, readSize);
-      m_Output->write("\r\n", 2);
+      m_Output->write(const_cast<char*>("\r\n"), 2);
       CcString line;
       line.append(inData, 0, readSize);
       inData.clear();

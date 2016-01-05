@@ -9,6 +9,8 @@ ifconfig lo up
 
 /usr/bin/tcpsvd 0 21 ftpd -w /mnt &
 
+/usr/bin/CcCLIApp &
+
 /usr/bin/telnetd
 
 mkdir -p /etc/dropbear

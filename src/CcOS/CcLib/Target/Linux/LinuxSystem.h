@@ -32,7 +32,8 @@ public:
   bool createThread(CcThreadObject* object);
   CcSocket* getSocket(eSocketType type);
   time_t getTime( void );
-  virtual void sleep(time_t timeoutMs);
+  void sleep(time_t timeoutMs);
+  CcDevice* getDevice(eCcDeviceType Type, CcString Name);
 
 private:
   void initSystem(void);

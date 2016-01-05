@@ -51,8 +51,8 @@ public:
    */
   virtual ~CcHttpClient( void );
 
-  bool execGet(CcUrl url);
-  bool execHead(CcUrl url);
+  bool execGet(CcUrl url, CcVector<CcStringPair> *PostData = 0);
+  bool execHead(CcUrl url, CcVector<CcStringPair> *PostData = 0);
   bool execPost(CcUrl url, CcVector<CcStringPair> *PostData = 0);
   bool execPostMultip(CcUrl url, CcVector<CcStringPair> *PostData = 0, CcVector<CcStringPair> *files=0);
 

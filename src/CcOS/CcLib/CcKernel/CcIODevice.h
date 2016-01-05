@@ -29,18 +29,7 @@
 #define CCIODEVICE_H_
 
 #include "CcBase.h"
-#include "CcObject.h"
-
-typedef enum {
-  eAll = 0,
-  eUART,
-  eSPI,
-  eI2C,
-  eDisplay,
-  eTouchPanel,
-  eEthernet,
-  eTimer
-}eCcDeviceType;
+#include "CcDevice.h"
 
 #define Open_Read   0x0001
 #define Open_Write  0x0002
@@ -51,7 +40,7 @@ typedef enum {
 /**
  * @brief Abstract Class for inheriting to every IODevice
  */
-class CcIODevice {
+class CcIODevice : public CcDevice {
 public:
   /**
    * @brief Constructor

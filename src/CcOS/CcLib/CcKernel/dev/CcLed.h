@@ -29,20 +29,13 @@
 #define CcLed_H_
 
 #include "CcBase.h"
+#include "CcDevice.h"
 
 /**
  * @brief Control the Input and Outputports on device
  */
-class CcLed {
+class CcLed : public CcDevice{
 public:
-  /**
-   * @brief Structure holding Pin Settings
-   */
-  typedef struct{
-    uint16 PinFunction;
-    uint16 PinFunctionAvailable;
-  } sPin;
-
   /**
    * @brief Constructor
    */
@@ -56,9 +49,18 @@ public:
   /**
    * @brief Initialize basic settings for General Purpose Input Output
    */
-  virtual void init( void ) = 0;
+  virtual void setMaxBirghtness(uint16 brightness) = 0;
 
-  sPin *m_PinList; ///< List of all existing Pins available in this Class.
+  virtual void setToggleTime(uint16 onTime, uint16 offTime) = 0;
+
+  virtual void on(uint16 brightness = 0) = 0;
+
+  virtual void off() = 0;
+
+  virtual void toggle(uint16 brightness = 0) = 0;
+
+protected:
+  uint16 m_Brightness;
 };
 
 #endif /* CcLed_H_ */

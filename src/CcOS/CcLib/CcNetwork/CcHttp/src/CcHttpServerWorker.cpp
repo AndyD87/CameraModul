@@ -30,8 +30,9 @@
 #include "CcHttpServerWorker.h"
 #include "CcHttpRespHeader.h"
 
-CcHttpServerWorker::CcHttpServerWorker(CcSocket *socket) :
+CcHttpServerWorker::CcHttpServerWorker(CcHttpServer* Server, CcSocket *socket) :
   m_Socket(socket),
+  m_Server(Server),
   m_Header(false)
 {
 }

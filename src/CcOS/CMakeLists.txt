@@ -29,7 +29,7 @@ project(Main)
 ###################
 # Global Settings:
 ###################
-set(CMAKE_VERBOSE_MAKEFILE            ON)
+set(CMAKE_VERBOSE_MAKEFILE            OFF)
 set(EXECUTABLE_OUTPUT_PATH            ${CMAKE_CURRENT_SOURCE_DIR}/bin )
 set(LIBRARY_OUTPUT_PATH               ${CMAKE_CURRENT_SOURCE_DIR}/bin )
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -42,23 +42,9 @@ endif()
 ###################
 add_subdirectory(CcLib/)
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}/CcLib/CcCore
-                     ${CMAKE_CURRENT_SOURCE_DIR}/CcLib/CcKernel
-                     ${CMAKE_CURRENT_SOURCE_DIR}/CcLib/CcUtil
-                     ${CMAKE_CURRENT_SOURCE_DIR}/CcLib/CcGui
-                     ${CMAKE_CURRENT_SOURCE_DIR}/CcLib/ThirdParty )
-
-add_executable( CcCLIApp main.cpp )
-
-link_directories( ${LIBRARY_OUTPUT_PATH} )
-
-target_link_libraries ( CcCLIApp LINK_PUBLIC
-                              CcKernel
-                              CcCore
-                              CcTarget
-                              CcHttp
-                              CcFtp )
-
+####################
+# Add LamoboApp
+####################
+add_subdirectory(LamoboApp/)
 
 #message( ${LIBRARY_OUTPUT_PATH} )

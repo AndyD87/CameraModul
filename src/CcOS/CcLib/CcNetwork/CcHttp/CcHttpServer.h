@@ -36,6 +36,7 @@
 #include "CcHttpRespHeader.h"
 #include "CcApp.h"
 #include "CcHttpServerWorker.h"
+#include "CcHttpReceiver.h"
 
 /**
  * @brief Button for GUI Applications
@@ -55,12 +56,19 @@ public:
 
   static CcApp* main(CcStringList *Arg);
 
+  void setWorkingDir(CcString &Wd);
+  CcString &getWorkingDir(void);
+
+  void registerReceiver(CcHttpReceiver *toAdd);
+  void deregisterReceiver(CcHttpReceiver *toRemove);
+  CcVector<CcHttpReceiver*> getReceiverList(void);
   void run(void);
 
 private:
-  CcSocket *m_Socket;
-  CcVector<CcHttpServerWorker*> m_WorkerList;
   uint16    m_Port;
+  CcString  m_WD;
+  CcSocket *m_Socket;
+  CcVector<CcHttpReceiver*> m_ReceiverList;
 };
 
 #endif /* CcHttpServer_H_ */

@@ -31,7 +31,7 @@
 
 typedef struct{
   eCcDeviceType Type;
-  CcIODevice *Device;
+  CcDevice *Device;
 } sDeviceListItem;
 
 /**

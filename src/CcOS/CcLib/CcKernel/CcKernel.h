@@ -35,7 +35,7 @@
 #include "CcObject.h"
 #include "CcObjectHandler.h"
 #include "CcInputEvent.h"
-#include "CcIODevice.h"
+#include "CcDevice.h"
 #include "CcApp.h"
 #include "CcThreadObject.h"
 #include "CcThreadManager.h"
@@ -77,10 +77,12 @@ public:
   CcAppList    &getAppList(void);
   CcSystem     *getSystem(void);
   time_t        getTime(void);
-  void          setDevice(CcIODevice* Device, eCcDeviceType Type = eAll);
-  CcIODevice*   getDevice(eCcDeviceType Type = eAll, uint16 nr=0);
+  void          setDevice(CcDevice *Device, eCcDeviceType Type = eAll);
+  CcDevice*     getDevice(eCcDeviceType Type, uint16 nr=0);
+  CcDevice*     getDevice(eCcDeviceType Type, CcString Name);
   CcDeviceList &getDeviceList(void);
   CcSocket*     getSocket(eSocketType type);
+
   /**
   * @brief Initialize the Filesystem.
   * Check if System has one, otherwise Kernel will create one.

@@ -37,7 +37,7 @@ bool LinuxFilesystem::mkdir(CcString Path){
 
 bool LinuxFilesystem::del(CcString Path){
   if (LinuxFile(Path).isFile()){
-    if (remove(Path.getCharString()))
+    if (remove(Path.getCharString()) == 0)
       return true;
   }
   else{

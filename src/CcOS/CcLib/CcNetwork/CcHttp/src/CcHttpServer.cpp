@@ -50,6 +50,26 @@ CcHttpServer::~CcHttpServer( void )
 {
 }
 
+void CcHttpServer::setWorkingDir(CcString &Wd){
+  m_WD = Wd;
+}
+
+CcString &CcHttpServer::getWorkingDir(void){
+  return m_WD;
+}
+
+void CcHttpServer::registerReceiver(CcHttpReceiver *toAdd){
+  m_ReceiverList.append(toAdd);
+}
+
+void CcHttpServer::deregisterReceiver(CcHttpReceiver *toRemove){
+  m_ReceiverList.deleteItem(toRemove);
+}
+
+CcVector<CcHttpReceiver*> CcHttpServer::getReceiverList(void){
+  return m_ReceiverList;
+}
+
 void CcHttpServer::run(void){
   m_Socket = Kernel.getSocket(eTCP);
   ipv4_t localhost = { 127, 0, 0, 1 };
@@ -58,7 +78,7 @@ void CcHttpServer::run(void){
   CcSocket *temp;
   while (getThreadState() == CCTHREAD_RUNNING){
     temp = m_Socket->accept();
-    CcHttpServerWorker *worker = new CcHttpServerWorker(temp);
+    CcHttpServerWorker *worker = new CcHttpServerWorker(this, temp);
     worker->start();
   }
 }

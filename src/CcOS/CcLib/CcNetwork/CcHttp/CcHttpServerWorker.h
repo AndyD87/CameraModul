@@ -34,10 +34,12 @@
 #include "CcHttpRequHeader.h"
 #include "CcWorker.h"
 
+class CcHttpServer;
+
 class CcHttpServerWorker : public CcWorker
 {
 public:
-  CcHttpServerWorker(CcSocket *socket);
+  CcHttpServerWorker(CcHttpServer* Server, CcSocket *socket);
   virtual ~CcHttpServerWorker();
 
   void run(void);
@@ -47,7 +49,8 @@ public:
 
   bool done;
   CcHttpRequHeader m_Header;
-  CcSocket*     m_Socket;
+  CcSocket     *m_Socket;
+  CcHttpServer *m_Server;
   CcCharArray   m_InBuf;
 };
 

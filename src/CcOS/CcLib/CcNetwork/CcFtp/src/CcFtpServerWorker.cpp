@@ -123,7 +123,8 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
     m_Active = false;
     if ((m_DataSocket = Kernel.getSocket(eTCP)) != 0)
     {
-      while(true != m_DataSocket->bind({ 127, 0, 0, 1 }, m_DataPortInc)){
+      ipv4_t localhostIp = { 127, 0, 0, 1 };
+      while(true != m_DataSocket->bind(localhostIp, m_DataPortInc)){
           if (m_DataPortInc > 20000) m_DataPortInc = 12378;
           else m_DataPortInc++;
       }
@@ -184,7 +185,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   }
   case FTP_CWD:
   {
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     CcFile dir(sTemp);
     if (dir.isDir()){
       m_WD = sTemp;
@@ -216,7 +217,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   {
     bool bDone = false;
     CcString sRet;
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     CcFile file(sTemp);
     if (file.isFile() && file.open(Open_Read)){
       m_Socket->write((char*)"150 Opening ASCII mode data connection for /bin/ls \r\n", 53);
@@ -256,7 +257,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   }
   case FTP_RNFR:
   {
-    CcString sTemp = produceAbsolutPath(param);
+    m_Temp = m_WD.calcPathAppend(param);
     m_Socket->write((char*)FTP_200, sizeof(FTP_200));
     break;
   }
@@ -334,7 +335,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   }
   case FTP_MKD:
   {
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     if (Kernel.getFileSystem()->mkdir(sTemp)){
       sTemp = CcString() + "257 \"" + sTemp + "\" created\r\n";
       m_Socket->write(sTemp.getCharString(), sTemp.length());
@@ -345,7 +346,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   }
   case FTP_DELE:
   {
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     if (Kernel.getFileSystem()->del(sTemp)){
       sTemp = CcString() + "257 \"" + sTemp + "\" created\r\n";
       m_Socket->write((char*)FTP_250, sizeof(FTP_250));
@@ -356,7 +357,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
   }
   case FTP_RMD:
   {
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     if (Kernel.getFileSystem()->del(sTemp)){
       sTemp = CcString() + "257 \"" + sTemp + "\" created\r\n";
       m_Socket->write((char*)FTP_250, sizeof(FTP_250));
@@ -385,7 +386,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
     break;
   }
   case FTP_SIZE:{
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     CcFile file(sTemp);
     if (file.isFile()){
       size_t size = file.size();
@@ -397,7 +398,7 @@ void CcFtpServerWorker::parseCommand(CcString &Command){
     break;
   }
   case FTP_MDTM:{
-    CcString sTemp = produceAbsolutPath(param);
+    CcString sTemp = m_WD.calcPathAppend(param);
     CcFile file(sTemp);
     if (file.isFile()){
       tm tmTime = file.getLastModified();
@@ -433,16 +434,3 @@ bool CcFtpServerWorker::acceptDataConnection(void){
   return false;
 }
 
-CcString CcFtpServerWorker::produceAbsolutPath(CcString &input){
-  CcString m_Temp;
-  input.strReplace("\\", "/");
-  if (input.begins("/"))
-    m_Temp = input.strReplace("\\", "/");
-  else if (input.begins("./"))
-    m_Temp = m_WD + "/" + input.substr(2);
-  else if (input.at(1) == ':') //WindowsDrive
-    m_Temp = input.strReplace("\\", "/");
-  else
-    m_Temp = m_WD + "/" + input;
-  return m_Temp;
-}

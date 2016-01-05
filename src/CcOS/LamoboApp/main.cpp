@@ -14,6 +14,7 @@
 #include "CcKernel.h"
 #include "CcFtpServer.h"
 #include "CcHttpServer.h"
+#include "dev/CcLed.h"
 #include "stdio.h"
 
 
@@ -23,11 +24,13 @@ int main(int argc, char **argv)
   Kernel.setArg(argc, argv);
   Kernel.initCLI();
 
-  CcFtpServer FtpServer(27521);
-  FtpServer.start();
+  /*CCcFtpServer FtpServer(27521);
+  FtpServer.start();*/
   CcHttpServer HttpServer(27580);
   HttpServer.start();
 
-  Kernel.start();
+  CcLed *temp = (CcLed*)(Kernel.getDevice(eLed, "wps_led"));
+
+  Kernel.stop();
   return 0;
 }

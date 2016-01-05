@@ -402,10 +402,3 @@ bool CcString::operator>(CcString toCompare){
     return true;
   return false;
 }
-
-CcString& CcString::operator=(CcString assign)
-{
-  clear();
-  append(assign);
-  return(*this);
-}

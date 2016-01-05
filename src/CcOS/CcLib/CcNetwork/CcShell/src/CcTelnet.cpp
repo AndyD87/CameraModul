@@ -40,7 +40,8 @@ void CcTelnet::run(void){
   CcSocket *temp;
   bool bSuccess = false;
   m_Socket = Kernel.getSocket(eTCP);
-  bSuccess = m_Socket->bind({ 127, 0, 0, 1 }, m_Port);
+  ipv4_t localhostIp = { 127, 0, 0, 1 };
+  bSuccess = m_Socket->bind(localhostIp, m_Port);
   bSuccess = m_Socket->listen();
   temp = m_Socket->accept();
   m_Socket->close();

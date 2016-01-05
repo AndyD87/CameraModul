@@ -24,6 +24,7 @@ add_subdirectory( CcGui/ )
 add_subdirectory( CcNetwork/ )
 add_subdirectory( CcSql/ )
 add_subdirectory( CcGuiUtils/ )
+add_subdirectory( CcMedia/ )
 
 ###################
 # Add thirdparty

@@ -34,6 +34,7 @@
 #include "CcStringList.h"
 #include "CcFileSystem.h"
 #include "CcProcess.h"
+#include "CcDevice.h"
 #include "com/CcSocket.h"
 
 class CcSystem {
@@ -105,6 +106,14 @@ public:
    * @param timoutMs: timeout in milli seconds
    */
   virtual void sleep(time_t timeoutMs) = 0;
+
+  /**
+   * @brief getDevice form System by Name
+   * @param Type: Type of Device
+   * @param Name: Unique Name of Device to find by System
+   * @return Pointer to Device, or 0 if not found.
+   */
+  virtual CcDevice* getDevice(eCcDeviceType Type, CcString Name){CC_UNUSED(Type); CC_UNUSED(Name); return 0;}
 
   /**
    * @brief Get time in milliseconds system is running.

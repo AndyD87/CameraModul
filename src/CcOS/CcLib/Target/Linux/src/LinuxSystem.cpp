@@ -15,10 +15,12 @@
 #include "LinuxTouch.h"
 #include "LinuxFilesystem.h"
 #include "LinuxSocket.h"
+#include "LinuxLed.h"
 #include "CcKernel.h"
 #include "time.h"
 #include "pthread.h"
 #include "unistd.h"
+#include "stdio.h"
 
 LinuxSystem::LinuxSystem() {
 }
@@ -105,4 +107,23 @@ int32 LinuxSystem::getTime( void ){
 
 void LinuxSystem::sleep(time_t timeoutMs){
   usleep(1000 * timeoutMs);
+}
+
+CcDevice* LinuxSystem::getDevice(eCcDeviceType Type, CcString Name){
+  CcDevice *pRet;
+  switch (Type) {
+    case eLed:
+    {
+      CcString Path(CcString() + "/sys/class/leds/"+Name);
+      CcFile ledFolder(Path);
+      if(ledFolder.isDir()){
+        pRet = new LinuxLed(Path);
+      }
+      break;
+    }
+    default:
+      pRet = 0;
+      break;
+  }
+  return pRet;
 }

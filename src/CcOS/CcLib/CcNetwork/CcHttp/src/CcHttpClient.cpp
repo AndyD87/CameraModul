@@ -39,7 +39,7 @@ m_Output(0)
 CcHttpClient::~CcHttpClient( void ) {
 }
 
-bool CcHttpClient::execGet(CcUrl url){
+bool CcHttpClient::execGet(CcUrl url, CcVector<CcStringPair> *PostData){
   m_Url = url;
   bool bRet = false;
   if (url.isUrl())
@@ -59,7 +59,7 @@ bool CcHttpClient::execGet(CcUrl url){
   return bRet;
 }
 
-bool CcHttpClient::execHead(CcUrl url){
+bool CcHttpClient::execHead(CcUrl url, CcVector<CcStringPair> *PostData){
   m_Url = url;
   bool bRet = false;
   if (url.isUrl())
@@ -186,12 +186,12 @@ bool CcHttpClient::execPostMultip(CcUrl url, CcVector<CcStringPair> *PostData, C
         }
         file.close();
       }
-      m_Socket->write("\r\n", 2);
+      m_Socket->write(const_cast<char*>("\r\n"), 2);
     }
     size_t read;
     for (size_t i = 0; i < postParam.size(); i++){
       m_Socket->write(postParam.at(i).getCharString(), postParam.at(i).length());
-      m_Socket->write("\r\n", 2);
+      m_Socket->write(const_cast<char*>("\r\n"), 2);
     }
     bool bDone = false;
     char buf[1024];

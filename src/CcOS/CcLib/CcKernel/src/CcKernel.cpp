@@ -76,8 +76,7 @@ void CcKernel::systemReady(){
 }
 
 void CcKernel::delayMs(uint32 uiDelay){
-  time_t Timeout = uiDelay + getTime();
-  m_System->sleep(Timeout);
+  m_System->sleep(uiDelay);
 }
 
 void CcKernel::delayS(uint32 uiDelay){
@@ -191,7 +190,7 @@ void CcKernel::initDefault( void ){
   m_SystemStarted = false;
 }
 
-CcIODevice* CcKernel::getDevice(eCcDeviceType Type, uint16 nr){
+CcDevice* CcKernel::getDevice(eCcDeviceType Type, uint16 nr){
   uint16 cnt=0;
   for (size_t i = 0; i < m_DeviceList.size(); i++)
   {
@@ -205,6 +204,25 @@ CcIODevice* CcKernel::getDevice(eCcDeviceType Type, uint16 nr){
   return 0;
 }
 
+CcDevice* CcKernel::getDevice(eCcDeviceType Type, CcString Name){
+  CcDevice *pRet;
+  if(0){
+    //TODO: Kernel device manager
+  }
+  else{
+    pRet = m_System->getDevice(Type, Name);
+  }
+  return pRet;
+}
+
+void CcKernel::setDevice(CcDevice *Device, eCcDeviceType Type){
+  sDeviceListItem Item;
+  Item.Device = Device;
+  Item.Type = Type;
+  m_DeviceList.append(Item);
+}
+
+
 CcDeviceList &CcKernel::getDeviceList(void){
   return m_DeviceList;
 }
@@ -215,11 +233,4 @@ CcSocket* CcKernel::getSocket(eSocketType type){
 
 CcFileSystem* CcKernel::getFileSystem(void){
   return m_FileSystem;
-}
-
-void CcKernel::setDevice(CcIODevice* Device, eCcDeviceType Type){
-  sDeviceListItem Item;
-  Item.Device = Device;
-  Item.Type = Type;
-  m_DeviceList.append(Item);
 }
